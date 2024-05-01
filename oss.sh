@@ -21,9 +21,17 @@ option7="Exit"
 
 select  menu in "$option1" "$option2" "$option3" "$option4" "$option5" "$option6" "$option7" 
 do
-	if [ "$menu" = "Exit" ]
-	then
-		break
-	fi
-	echo "$var"
+	case $menu in
+		$option1)
+			read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
+			if [ "$choice" = "y" ]
+			then
+				cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
+			else
+				continue	
+			;;
+		$option7)
+			break
+			;;
+	esac	
 done
