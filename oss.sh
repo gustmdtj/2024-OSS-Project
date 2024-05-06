@@ -51,7 +51,11 @@ do
                         fi
                         ;;
 
-                7)
+ 		2)
+			read -p "What do you want to get the team data of league_position[1~20] :" choice
+			cat teams.csv | awk -F, '$6 == 17 {printf("%d %s %f",$6, $1, $2/($2+$3+$4))}'
+              		;;
+		7)
                         break
                         ;;
         esac
