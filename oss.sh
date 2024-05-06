@@ -1,5 +1,26 @@
 #! /bin/bash
 
+op1="1.Get the data of Heung-Min Son's Current Club, Appearances, Goals, Assists in players.csv"
+op2="2.Get the team data to enter a league position in teams.csv"
+op3="3.Get the Top-3 Attendance matches in mateches.csv"
+op4="4.Get the team's league position and team's top scorer in teams.csv & players.csv"
+op5="5.Get the modified format of date_GMT in matches.csv"
+op6="6.Get the data of the winning team by the largest difference on home stadium in teams.csv & matches.csv"
+op7="7.Exit"
+
+function selectMenu {
+	echo "[MENU]"
+	echo $op1
+	echo $op2
+	echo $op3
+	echo $op4
+	echo $op5
+	echo $op6
+	echo $op7
+	read -p "Enter your CHOICE(1~7) : " choice
+	return $choice
+}
+
 if [ -z $1 ] || [ -z $2 ] || [ -z $3 ]
 then
 	echo "usage: ./oss.sh file1 file2 file3"
@@ -11,27 +32,27 @@ echo "*        StudentID : 12182891         *"
 echo "*        Name : HyeonSeung Seo        *"
 echo "***************************************"
 
-option1="Get the data of Heung-Min Son's Current Club, Appearances, Goals, Assists in players.csv"
-option2="Get the team data to enter a league position in teams.csv"
-option3="Get the Top-3 Attendance matches in mateches.csv"
-option4="Get the team's league position and team's top scorer in teams.csv & players.csv"
-option5="Get the modified format of date_GMT in matches.csv"
-option6="Get the data of the winning team by the largest difference on home stadium in teams.csv & matches.csv"
-option7="Exit"
-
-select  menu in "$option1" "$option2" "$option3" "$option4" "$option5" "$option6" "$option7" 
+while true
 do
-	case $menu in
-		$option1)
-			read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
-			if [ "$choice" = "y" ]
-			then
-				cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
-			else
-				continue	
-			;;
-		$option7)
-			break
-			;;
-	esac	
+	selectMenu
+	menu=$?
+	if [ $menu -eq 7 ]
+	then	
+		break
+	fi
+        case $menu in
+                1)
+                        read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
+                        if [ "$choice" = "y" ]
+                        then
+                                cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
+                        else
+                                continue
+                        fi
+                        ;;
+
+                7)
+                        break
+                        ;;
+        esac
 done
