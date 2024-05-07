@@ -12,22 +12,20 @@ function menu3 {
 read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
 if [ "$choice" = "y"  ]
 then
-
+echo "menu3"
 fi
 }
 
 function menu2 {
 read -p "What do you want to get the team data of league_position[1~20] :" choice
-cat teams.csv | awk -F, '$6 == $choice {printf("%d %    s %f",$6, $1, $2/($2+$3+$4))}'
+cat teams.csv | awk -F, -v var=$choice '$6 == var {printf("%d %s %f\n",$6, $1, $2/($2+$3+$4))}'
 }
 
 function menu1 {
-read -p "Do you want to get the Heung-Min Son's data    ? (y/n) :" choice
+read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
 if [ "$choice" = "y" ]
 then
-	cat players.csv | awk -F, '$1~"Heung-Min" {p    rint ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
-else
-	continue
+cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
 fi
 }
 
@@ -59,20 +57,10 @@ while true
 do
 	selectMenu
 	menu=$?
-	if [ $menu -eq 7 ]
-	then	
-		break
-	fi
         case $menu in
                 1)
-                        read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
-                        if [ "$choice" = "y" ]
-                        then
-                                cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
-                        else
-                                continue
-                        fi
-                        ;;
+                        menu1
+			;;
 
  		2)
 			menu2
