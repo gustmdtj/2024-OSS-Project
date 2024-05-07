@@ -8,11 +8,21 @@ op5="5.Get the modified format of date_GMT in matches.csv"
 op6="6.Get the data of the winning team by the largest difference on home stadium in teams.csv & matches.csv"
 op7="7.Exit"
 
+function menu5 {
+read -p "Do you want to modify the format of date?(y/n): " choice
+
+}
+
+function menu4 {
+read -p "Do you want to get each team's ranking and the highest-scoring player?(y/n): " choice
+
+}
+
 function menu3 {
 read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
 if [ "$choice" = "y"  ]
 then
-echo "menu3"
+cat matches.csv | sort -t "," -r -k 2 -n | head -3 | echo
 fi
 }
 
@@ -68,7 +78,11 @@ do
 		3)
 			menu3
 			;;
+		4)
+			menu4
+			;;
 		7)
+			echo "Bye!"
                         break
                         ;;
         esac
