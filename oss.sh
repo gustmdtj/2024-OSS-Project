@@ -8,6 +8,29 @@ op5="5.Get the modified format of date_GMT in matches.csv"
 op6="6.Get the data of the winning team by the largest difference on home stadium in teams.csv & matches.csv"
 op7="7.Exit"
 
+function menu3 {
+read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
+if [ "$choice" = "y"  ]
+then
+
+fi
+}
+
+function menu2 {
+read -p "What do you want to get the team data of league_position[1~20] :" choice
+cat teams.csv | awk -F, '$6 == $choice {printf("%d %    s %f",$6, $1, $2/($2+$3+$4))}'
+}
+
+function menu1 {
+read -p "Do you want to get the Heung-Min Son's data    ? (y/n) :" choice
+if [ "$choice" = "y" ]
+then
+	cat players.csv | awk -F, '$1~"Heung-Min" {p    rint ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
+else
+	continue
+fi
+}
+
 function selectMenu {
 	echo "[MENU]"
 	echo $op1
@@ -52,9 +75,11 @@ do
                         ;;
 
  		2)
-			read -p "What do you want to get the team data of league_position[1~20] :" choice
-			cat teams.csv | awk -F, '$6 == 17 {printf("%d %s %f",$6, $1, $2/($2+$3+$4))}'
+			menu2
               		;;
+		3)
+			menu3
+			;;
 		7)
                         break
                         ;;
