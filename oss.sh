@@ -8,6 +8,17 @@ op5="5.Get the modified format of date_GMT in matches.csv"
 op6="6.Get the data of the winning team by the largest difference on home stadium in teams.csv & matches.csv"
 op7="7.Exit"
 
+function menu6 {
+	awk -F, '{if (NR > 1) {printf("%s,", $1)}}' teams.csv > teams.txt
+	oldIFS=$IFS
+	IFS=,
+	PS3="Enter your team number: "
+	select var in $(cat teams.txt)
+	do
+		echo $var
+	done
+}
+
 function menu5 {
 	read -p "Do you want to modify the format of date?(y/n): " choice
 	cat matches.csv | awk -F"," '{printf "%s \n", $1}' | head -11 | tail -10 | awk '{printf("%s/%s/%s", $3, $1, $2); fflush(); printf(" %s\n", $5)}' | sed -e 's/Aug/08/g'
@@ -16,6 +27,7 @@ function menu5 {
 
 function menu4 {
 	read -p "Do you want to get each team's ranking and the highest-scoring player?(y/n): " choice
+
 
 }
 
@@ -70,25 +82,28 @@ do
 	selectMenu
 	menu=$?
         case $menu in
-                1)
-                        menu1
-			;;
+        	1)
+            	menu1
+				;;
 
- 		2)
-			menu2
-              		;;
-		3)
-			menu3
-			;;
-		4)
-			menu4
-			;;
-		5)
-			menu5
-			;;
-		7)
-			echo "Bye!"
-                        break
-                        ;;
+ 			2)
+				menu2
+              	;;
+			3)
+				menu3
+				;;
+			4)
+				menu4
+				;;
+			5)
+				menu5
+				;;
+			6)
+				menu6
+				;;
+			7)
+				echo "Bye!"
+                break
+                ;;
         esac
 done
