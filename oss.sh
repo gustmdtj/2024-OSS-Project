@@ -22,7 +22,8 @@ function menu3 {
 read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
 if [ "$choice" = "y"  ]
 then
-cat matches.csv | sort -t "," -r -k 2 -n | head -3 | echo
+	echo "***Top-3 Attendance Match***"
+	cat matches.csv | sort -t"," -r -k 2 -n | head -3 | awk -F, '{print("\n\n", $3, "vs", $4, "("$1")\n", $2, $7)}'
 fi
 }
 
@@ -80,6 +81,9 @@ do
 			;;
 		4)
 			menu4
+			;;
+		5)
+			menu5
 			;;
 		7)
 			echo "Bye!"
