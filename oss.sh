@@ -9,35 +9,36 @@ op6="6.Get the data of the winning team by the largest difference on home stadiu
 op7="7.Exit"
 
 function menu5 {
-read -p "Do you want to modify the format of date?(y/n): " choice
+	read -p "Do you want to modify the format of date?(y/n): " choice
+	cat matches.csv | awk -F"," '{printf "%s \n", $1}' | head -11 | tail -10 | awk '{printf("%s/%s/%s", $3, $1, $2); fflush(); printf(" %s\n", $5)}' | sed -e 's/Aug/08/g'
 
 }
 
 function menu4 {
-read -p "Do you want to get each team's ranking and the highest-scoring player?(y/n): " choice
+	read -p "Do you want to get each team's ranking and the highest-scoring player?(y/n): " choice
 
 }
 
 function menu3 {
-read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
-if [ "$choice" = "y"  ]
-then
-	echo "***Top-3 Attendance Match***"
-	cat matches.csv | sort -t"," -r -k 2 -n | head -3 | awk -F, '{print("\n\n", $3, "vs", $4, "("$1")\n", $2, $7)}'
-fi
+	read -p "Do you want to know Top-3 attendance data and average attendance? (y/n): " choice
+	if [ "$choice" = "y"  ]
+	then
+		echo "***Top-3 Attendance Match***"
+		cat matches.csv | sort -t"," -r -k 2 -n | head -3 | awk -F, '{print("\n\n", $3, "vs", $4, "("$1")\n", $2, $7)}'
+	fi
 }
 
 function menu2 {
-read -p "What do you want to get the team data of league_position[1~20] :" choice
-cat teams.csv | awk -F, -v var=$choice '$6 == var {printf("%d %s %f\n",$6, $1, $2/($2+$3+$4))}'
+	read -p "What do you want to get the team data of league_position[1~20] :" choice
+	cat teams.csv | awk -F, -v var=$choice '$6 == var {printf("%d %s %f\n",$6, $1, $2/($2+$3+$4))}'
 }
 
 function menu1 {
-read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
-if [ "$choice" = "y" ]
-then
-cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
-fi
+	read -p "Do you want to get the Heung-Min Son's data? (y/n) :" choice
+	if [ "$choice" = "y" ]
+	then
+		cat players.csv | awk -F, '$1~"Heung-Min" {print ("Team:"$4", Apperance:"$6", Goal:"$7", Assist:"$8)}'
+	fi
 }
 
 function selectMenu {
