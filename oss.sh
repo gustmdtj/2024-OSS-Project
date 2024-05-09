@@ -13,9 +13,11 @@ function menu6 {
 	oldIFS=$IFS
 	IFS=,
 	PS3="Enter your team number: "
-	select var in $(cat teams.txt)
+	select choice in $(cat teams.txt)
 	do
-		echo $var
+		IFS=
+		awk -F, -v var="$choic"e '$2 == "$var" {printf("$s\n$s $d vs $s $d", $1, $3, $5, $4, $6)}' matches.csv
+		break
 	done
 }
 
