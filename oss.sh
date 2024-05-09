@@ -15,8 +15,9 @@ function menu6 {
 	PS3="Enter your team number: "
 	select choice in $(cat teams.txt)
 	do
-		IFS=
-		awk -F, -v var="$choic"e '$2 == "$var" {printf("$s\n$s $d vs $s $d", $1, $3, $5, $4, $6)}' matches.csv
+		selected="$choice"
+		differ=$(awk -F, -v var=0 -v team="$selected" '$3~team {if($5 - $6 > var) var=($5 - $6)} END {printf("%d", var)}' matches.csv)
+		awk -F, -v var=$selected -v diff=$differ '($3~var) && ($5 - $6 == diff) {if (NR > 1) {printf("%s\n%s %d vs %d %s\n\n", $1, $3, $5, $6, $4)}}' matches.csv
 		break
 	done
 }
