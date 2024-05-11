@@ -30,8 +30,16 @@ function menu5 {
 
 function menu4 {
 	read -p "Do you want to get each team's ranking and the highest-scoring player?(y/n): " choice
-
-
+	awk -F, '{if (NR > 1) {printf("%d-%s,\n", $6, $1)}}' teams.csv > teams.txt
+	cat teams.txt | sort -t "-" -k 1 -n > teamsSort.txt
+	IFS=,
+	for var in $(cat teamsSort.txt | tr -d '\n')
+	do
+		rank=($(echo $var | cut -d '-' -f1))
+		team=($(echo $var | cut -d '-' -f2))
+		echo $rank $team
+		awk -F, -v str=$team -v orverall=0 -v name="name" '$4~str {if (NR > 1) {if($7 >= overall) {name=$1;overall=$7}}} END {printf("%s %d\n\n", name, overall)}' players.csv
+	done
 }
 
 function menu3 {
